@@ -96,6 +96,7 @@ class HangmanCanvas {
   }
 }
 
+// remember this is the same as $(document).ready(...)
 $(function () {
 
   var gameStarted = false;
