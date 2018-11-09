@@ -8,7 +8,7 @@ describe('Hangman Game', function () {
       expect(hangman.words).toBeDefined();
     });
     it('There should be at least one word to pick', function () {
-      // expect(hangman.words.length).toBeGreater(2);
+      expect(hangman.words.length).toBeGreaterThan(0);
     });
   });
 
@@ -39,17 +39,11 @@ describe('Hangman Game', function () {
       expect(typeof (hangman.checkIfLetter)).toBe('function');
     });
 
-    it('checkIfLetter should return a boolean', function () {
-      var keyCode = 43;
-      hangman.checkIfLetter(keyCode);
-      expect(typeof (keyCode)).toBe('number');
-    });
-
-    it('checkIfLetter should return false', function () {
+    it('checkIfLetter should return false if not a lowercase letter', function () {
       expect(hangman.checkIfLetter(43)).toEqual(false);
     });
 
-    it('checkIfLetter should return true', function () {
+    it('checkIfLetter should return true if a lowercase letter', function () {
       expect(hangman.checkIfLetter(76)).toEqual(true);
     });
   });
@@ -58,11 +52,13 @@ describe('Hangman Game', function () {
     it('checkClickedLetters should be a function', function () {
       expect(typeof (hangman.checkClickedLetters)).toBe('function');
     });
+
     it('checkClickedLetters should receive a string', function () {
       var key = 'P';
       hangman.checkClickedLetters(key);
       expect(typeof (key)).toBe('string');
     });
+
     it('checkClickedLetters should return a boolean', function () {
       hangman.letters.push('I');
       expect(typeof (hangman.checkIfLetter('N'))).toBe('boolean');
@@ -83,11 +79,7 @@ describe('Hangman Game', function () {
     it('addCorrectLetter should be a function', function () {
       expect(typeof (hangman.addCorrectLetter)).toBe('function');
     });
-    it('addCorrectLetter should receive a number', function () {
-      var key = 'N';
-      hangman.checkClickedLetters(key);
-      expect(typeof (key)).toBe('string');
-    });
+
     it('addCorrectLetter should add letters to guessedLetter string', function () {
       hangman.secretWord = 'Ironhack';
       hangman.addCorrectLetter(1);
