@@ -1,7 +1,7 @@
 describe('Hangman Game', function () {
   var hangman;
   beforeEach(function () {
-    hangman = new Hangman();
+    hangman = new HangmanGame();
   });
   describe('Words to Pick', function () {
     it('There should be an array of words', function () {
