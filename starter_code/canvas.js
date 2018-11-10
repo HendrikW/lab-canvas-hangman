@@ -18,8 +18,10 @@ class HangmanCanvas {
     let lineLength = 50;
     for (let i = 0; i < this.secretWord.length; i++) {
       this.ctx.beginPath();
-      // TODO
+      this.ctx.moveTo(x,y);
+      this.ctx.lineTo(x + lineLength, y)
       this.ctx.stroke();
+      x = x + 60;
     }
   }
 
@@ -72,7 +74,8 @@ class HangmanCanvas {
   // 4. 
   drawBody() {
     this.ctx.beginPath();
-    // TODO
+    this.ctx.moveTo(0,0)
+    this.ctx.lineTo(310,120);
     this.ctx.stroke();
     return this
   }
@@ -80,6 +83,8 @@ class HangmanCanvas {
   drawArms() {
     this.ctx.beginPath();
     // TODO
+    this.ctx.lineTo(x, y);
+
     this.ctx.stroke();
     return this
   }
@@ -87,6 +92,9 @@ class HangmanCanvas {
   drawLegs() {
     this.ctx.beginPath();
     // TODO
+
+    this.ctx.lineTo(x, y);
+
     this.ctx.stroke();
     return this
   }

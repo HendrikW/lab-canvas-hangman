@@ -110,7 +110,7 @@ describe('Hangman Game', function () {
     it('checkGameOver should return a boolean', function () {
       expect(typeof (hangman.checkGameOver())).toBe('boolean');
     });
-    it('checkGameOver should return false if the errorsLeft is 0', function () {
+    it('checkGameOver should return true if the errorsLeft is 0', function () {
       hangman.errorsLeft = 0;
       expect(hangman.checkGameOver()).toEqual(true);
     });
@@ -132,7 +132,7 @@ describe('Hangman Game', function () {
       hangman.guessedLetter = 'KHARCNIO';
       expect(hangman.checkWinner()).toEqual(true);
     });
-    it('checkWinner should return true if we guess all letters', function () {
+    it('checkWinner should return false if we guess all letters', function () {
       hangman.secretWord = 'IRONHACK';
       hangman.guessedLetter = 'KHARCN';
       expect(hangman.checkWinner()).toEqual(false);
