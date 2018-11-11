@@ -1,9 +1,10 @@
 // NOTE: jQuery is available for you to use :-)
 
 class HangmanCanvas {
-  constructor(secretWord, wordArray, guessedLetter) {
+  constructor(secretWord, wordArray, letters, guessedLetter) {
     this.secretWord = secretWord;
     this.wordArray = wordArray;
+    this.letters = letters;
     this.guessedLetter = guessedLetter;
     //this.canvasArray = this.secretWord.split("");
     this.canvas = $("#hangman")[0];
@@ -38,11 +39,15 @@ class HangmanCanvas {
     );
   }
 
-  writeWrongLetter(letter, errorsLeft) {
+  writeWrongLetter(letter, count) {
     let lineSeparation = 70;
-    this.ctx.font = "48px serif";
+    var x = 310;
+    var y = 680;
+    this.ctx.font = "48px Futura";
     this.ctx.fillStyle = "red";
-    // TODO
+    //this.ctx.beginPath();
+    this.ctx.fillText(letter.toUpperCase(),x + ((4-count)*60),y);
+    this.ctx.fillText("Versuche übrig:" + count,400,100);
     console.log("-- wrote letter " + letter + " as a wrong letter --");
   }
 
@@ -144,6 +149,7 @@ $(function() {
       hangmanGame.secretWord,
       hangmanGame.wordArray,
       hangmanGame.guessedLetter,
+      hangmanGame.letters
     );
     canvas.createBoard();
     canvas.drawLines();
@@ -167,23 +173,39 @@ $(function() {
     var keyPressed = event.key.toUpperCase();
     if (hangmanGame.checkIfLetter(codeOfKey) === true) {
       console.log("--- key pressed : " + keyPressed + " ---");
+      canvas.letters.push(keyPressed);
+      console.log("--- List of pressed letters : " + canvas.letters + " ---");
     }
+
     if (hangmanGame.checkClickedLetters(keyPressed) === false) {
-      alert("Den Buchstaben hast du schon gedrückt!!!");
+      alert("Den Buchstaben hast du schon gewählt.");
+    
     } else {
       if (hangmanGame.wordArray.includes(keyPressed)) {
         canvas.wordArray.forEach(function(letter, index) {
           if (letter === keyPressed) {
             canvas.writeCorrectLetter(index);
+            canvas.guessedLetter.push(keyPressed);
+            console.log(
+              "--- List of correct letters : " + canvas.guessedLetter + " ---"
+            );
           }
         });
-        if (canvas.wordArray.lenght === canvas.guessedLetter.length){
-          alert("Du hast gewonnen!!!")
-        }
         console.log("--- Correct letter : " + keyPressed + " ---");
-        console.log("--- List of correct letters : " + canvas.guessedLetter + " ---");
+      }
+      else {
+        alert("Der Buchstabe ist falsch.");
+        if(hangmanGame.errorsLeft <= 0){
+          alert("Du hast verloren!")}
+          else{
+        hangmanGame.errorsLeft = hangmanGame.errorsLeft - 1; 
+        canvas.writeWrongLetter(keyPressed, hangmanGame.errorsLeft);
+        console.log("--- Errors left : " + hangmanGame.errorsLeft + " ---");
+        
+        }
       }
     }
+
 
     // 1. check if pressed key is a letter at all -> if no, don't proceed
     // 2. check if the pressed key was tried before already -> if yes, notify the user and don't proceed

@@ -10,7 +10,7 @@ class HangmanGame {
     console.log(this.wordArray);
     this.letters = []; // all the clicked letters
     this.guessedLetter = []; // all the correctly guessed letters ( as a string, not an array )
-    this.errorsLeft = 10; // errors you are still allowed
+    this.errorsLeft = 4; // errors you are still allowed
   }
 
   // returns upper case version of a random word from our words array ( check out ._sample() from lodash :-) )
@@ -21,6 +21,7 @@ class HangmanGame {
   checkIfLetter(keyCode) {
     if (keyCode >= 65 && keyCode <= 90) {
       //this.letters.push(keyCode.key);
+      //this.letters.push(keyCode);
       return true;
     } else return false;
     /* TODO, see the table on https://keycode.info/ */
@@ -28,7 +29,6 @@ class HangmanGame {
 
   checkClickedLetters(letter) {
     if (this.letters.includes(letter)) {
-      this.addCorrectLetter()
       return false;
     } else {
       return true;
