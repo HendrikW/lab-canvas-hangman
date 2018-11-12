@@ -16,10 +16,13 @@ class HangmanCanvas {
     let x = 410;
     let y = 600;
     let lineLength = 50;
+    this.ctx.lineWidth = 3
     for (let i = 0; i < this.secretWord.length; i++) {
       this.ctx.beginPath();
-      // TODO
+      this.ctx.moveTo(x,y);
+      this.ctx.lineTo(x + lineLength, y)
       this.ctx.stroke();
+      x = x + 60;
     }
   }
 
@@ -53,9 +56,19 @@ class HangmanCanvas {
   drawPole() {
     // console.log('pole')
     this.ctx.beginPath();
-    // TODO
+    this.ctx.moveTo(150, 550);
+    this.ctx.lineTo(150, 50);
     this.ctx.stroke();
     return this
+  }
+
+  drawBar() {
+    this.ctx.beginPath();
+    this.ctx.moveTo(150, 50); // top left
+    this.ctx.lineTo(350, 50); // top righ
+    this.ctx.lineTo(350, 100); // rope
+    this.ctx.stroke();
+    return this;
   }
 
   drawHead() {
@@ -72,27 +85,34 @@ class HangmanCanvas {
   // 4. 
   drawBody() {
     this.ctx.beginPath();
-    // TODO
+    this.ctx.moveTo(350, 200); 
+    this.ctx.lineTo(350, 400);
     this.ctx.stroke();
     return this
   }
   // 5. 
   drawArms() {
     this.ctx.beginPath();
-    // TODO
+    this.ctx.moveTo(350, 223); 
+    this.ctx.lineTo(250, 223); 
+    this.ctx.moveTo(350, 223); 
+    this.ctx.lineTo(450, 223); 
     this.ctx.stroke();
     return this
   }
   // 6. 
   drawLegs() {
     this.ctx.beginPath();
-    // TODO
+    this.ctx.moveTo(350, 400); 
+    this.ctx.lineTo(250, 490); 
+    this.ctx.moveTo(350, 400); 
+    this.ctx.lineTo(450, 490); 
     this.ctx.stroke();
     return this
   }
 
   drawHangman() {    
-    this.drawTriangle().drawPole().drawHead().drawBody().drawArms().drawLegs()
+    this.drawTriangle().drawPole().drawBar().drawHead().drawBody().drawArms().drawLegs()
   }
 }
 
