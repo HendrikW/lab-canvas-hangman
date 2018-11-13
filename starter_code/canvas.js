@@ -1,5 +1,6 @@
 // NOTE: jQuery is available for you to use :-)
 
+
 class HangmanCanvas {
   constructor(secretWord) {
     this.secretWord = secretWord
@@ -7,8 +8,10 @@ class HangmanCanvas {
     this.ctx = this.canvas.getContext('2d');
   }
 
+
   createBoard() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.canvas.linewidth = 5
     // TODO: set line width for the canvas 2d context
   }
 
@@ -17,8 +20,10 @@ class HangmanCanvas {
     let y = 600;
     let lineLength = 50;
     for (let i = 0; i < this.secretWord.length; i++) {
+      var newX = x +i*60;
       this.ctx.beginPath();
-      // TODO
+      this.ctx.moveTo(newX,y);
+      this.ctx.lineTo(newX+lineLength,y);
       this.ctx.stroke();
     }
   }
@@ -53,7 +58,10 @@ class HangmanCanvas {
   drawPole() {
     // console.log('pole')
     this.ctx.beginPath();
-    // TODO
+    this.ctx.moveTo(150,550);
+    this.ctx.lineTo(150,50);
+    this.ctx.lineTo(350,50)
+    this.ctx.lineTo(350,150-50)
     this.ctx.stroke();
     return this
   }
@@ -72,21 +80,26 @@ class HangmanCanvas {
   // 4. 
   drawBody() {
     this.ctx.beginPath();
-    // TODO
+    this.ctx.moveTo(350,200);
+    this.ctx.lineTo(350,400);
     this.ctx.stroke();
     return this
   }
   // 5. 
   drawArms() {
     this.ctx.beginPath();
-    // TODO
+    this.ctx.moveTo(250,350);
+    this.ctx.lineTo(350,250);
+    this.ctx.lineTo(450,350);
     this.ctx.stroke();
     return this
   }
   // 6. 
   drawLegs() {
     this.ctx.beginPath();
-    // TODO
+    this.ctx.moveTo(250,550);
+    this.ctx.lineTo(350,400);
+    this.ctx.lineTo(450,550);
     this.ctx.stroke();
     return this
   }
@@ -123,16 +136,44 @@ $(function () {
     var codeOfKey = event.keyCode; // returns a number, i.e.: 69
     var keyPressed = event.key.toUpperCase();
     console.log("--- key pressed : " + keyPressed + " ---")
-
     // 1. check if pressed key is a letter at all -> if no, don't proceed
+    if(!hangmanGame.checkIfLetter(codeOfKey)){
+      console.log("this is not a letter")
+      return
+    }
     // 2. check if the pressed key was tried before already -> if yes, notify the user and don't proceed
-
+    if (!hangmanGame.checkClickedLetters(keyPressed)){
+      console.log("key has already been pressed")
+      return
+    }
     // 3. check if the pressed key is a letter of the secret word
+     
+     if (hangmanGame.secretWord.includes(keyPressed)) {
+        console.log("this letter is included")
+        var indicies = []
+        for (var i=0; i<hangmanGame.secretWord.length; i++) {
+          if (hangmanGame.secretWord[i]=== keyPressed){
+            indicies.push(i)
+          }
+        }
+        console.log(indicies)
+        for (var i=0; i<indicies.length; i++) {
+          hangmanGame.addCorrectLetter(indicies[i])
+        }
+
+        if (hangmanGame.secretWord.includes(keyPressed)) {
+          hangmanGame.addCorrectLetter(hangmanGame.secretWord.indexOf(keyPressed));
+          canvas.writeCorrectLetter(hangmanGame.secretWord.indexOf(keyPressed));
+          this.ctx.fillText(letter, 600, indicies[i]*60+x)
+      }
+      else {
+          hangmanGame.addWrongLetter(keyPressed);
+          canvas.writeWrongLetter(keyPressed,hangmanGame.errorsLeft);
+      }
+    }
+    
+
     // -> if yes, write the letter on the correct position on the canvas and add the POSITION as a correct position to the game
     // -> (note which parameters the respective methods receive)
     // -> if no, write the letter on the canvas and add as a wrong letter to the game
     // -> (note which parameters the respective methods receive)
-
-  }
-
-});
