@@ -18,7 +18,8 @@ class HangmanCanvas {
     let lineLength = 50;
     for (let i = 0; i < this.secretWord.length; i++) {
       this.ctx.beginPath();
-      // TODO
+      this.ctx.moveTo(0, y);
+      this.ctx.lineTo(50, y);
       this.ctx.stroke();
     }
   }
